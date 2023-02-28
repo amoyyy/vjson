@@ -44,3 +44,5 @@ v.replace_item(Value* v, "key")
 // case6: others function : judge whether "key" is a item of object
 v_ref: v_ref["key1"].has_member("key")；
 ```
+
+Thanks to milo yip for his ```dtoa``` implemention. It's integrated into the encoder.
