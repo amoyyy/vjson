@@ -1,24 +1,21 @@
 #pragma once
 #include "json_parser/parser.h"
 #include "json_encoder/encoder.h"
+#include "json_utils/interface.h"
 
 class Jdoc
 {
-	using json = utils::json::Value;
-	using parser = utils::json::Parser;
-	using encoder = utils::json::Encoder;
+public:
+	Value *doc;
 
 public:
-	json *doc;
-
-public:
-	bool has_member(const utils::FRString &key)
+	bool has_member(const FRString &key)
 	{
 		return doc->has_member(key);
 	}
 
 	// reader
-	json &operator[](const utils::FRString &key)
+	Value &operator[](const FRString &key)
 	{
 		return (*doc)[key];
 	}
@@ -27,7 +24,7 @@ public:
 	// writer
 	void save_doc(const std::string &output_path)
 	{
-		encoder ed(doc);
+		Encoder ed(doc);
 		std::ofstream file(output_path);
 		file << ed.buffer.rdbuf();
 		file.close();
@@ -36,7 +33,7 @@ public:
 	// get Value from file
 	Jdoc(const std::string &input_path)
 	{
-		doc = parser(input_path).decode();
+		doc = Parser(input_path).decode();
 	}
 
 public:
